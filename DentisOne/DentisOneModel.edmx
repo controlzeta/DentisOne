@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DentisOneDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Appointments">
+          <Key>
+            <PropertyRef Name="idAppointment" />
+          </Key>
+          <Property Name="idAppointment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Treatment" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Time" Type="time" Precision="7" />
+          <Property Name="Reminder" Type="bit" />
+          <Property Name="idPatient" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Balances">
+          <Key>
+            <PropertyRef Name="idBalance" />
+          </Key>
+          <Property Name="idBalance" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idPatient" Type="int" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="ClinicalStories">
+          <Key>
+            <PropertyRef Name="idClinicalStory" />
+          </Key>
+          <Property Name="idClinicalStory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CurrentCondition" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Heritage">
+          <Key>
+            <PropertyRef Name="idHeritage" />
+          </Key>
+          <Property Name="idHeritage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="idPatient" />
+          </Key>
+          <Property Name="idPatient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Age" Type="int" />
+          <Property Name="PhoneNumber" Type="nchar" MaxLength="10" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="80" />
+          <Property Name="Folder" Type="nvarchar" MaxLength="50" />
+          <Property Name="PreferredContactForm" Type="int" />
+          <Property Name="idClinicalStory" Type="int" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="UserRegistration" Type="datetime" />
+          <Property Name="Avatar" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="idPayment" />
+          </Key>
+          <Property Name="idPayment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Pay" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="idBalance" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Appointments_Patients">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="0..1" />
+          <End Role="Appointments" Type="Self.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="idPatient" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="idPatient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Balances_Patients">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="0..1" />
+          <End Role="Balances" Type="Self.Balances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="idPatient" />
+            </Principal>
+            <Dependent Role="Balances">
+              <PropertyRef Name="idPatient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Patients_ClinicalStories">
+          <End Role="ClinicalStories" Type="Self.ClinicalStories" Multiplicity="0..1" />
+          <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClinicalStories">
+              <PropertyRef Name="idClinicalStory" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="idClinicalStory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Balances">
+          <End Role="Balances" Type="Self.Balances" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Balances">
+              <PropertyRef Name="idBalance" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="idBalance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DentisOneDBModelStoreContainer">
+          <EntitySet Name="Appointments" EntityType="Self.Appointments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Balances" EntityType="Self.Balances" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClinicalStories" EntityType="Self.ClinicalStories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Heritage" EntityType="Self.Heritage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Appointments_Patients" Association="Self.FK_Appointments_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Balances_Patients" Association="Self.FK_Balances_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Balances" EntitySet="Balances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Patients_ClinicalStories" Association="Self.FK_Patients_ClinicalStories">
+            <End Role="ClinicalStories" EntitySet="ClinicalStories" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Balances" Association="Self.FK_Payments_Balances">
+            <End Role="Balances" EntitySet="Balances" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DentisOneDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="idAppointment" />
+          </Key>
+          <Property Name="idAppointment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Treatment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Time" Type="Time" Precision="7" />
+          <Property Name="Reminder" Type="Boolean" />
+          <Property Name="idPatient" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK_Appointments_Patients" FromRole="Appointments" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="Balance">
+          <Key>
+            <PropertyRef Name="idBalance" />
+          </Key>
+          <Property Name="idBalance" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idPatient" Type="Int32" />
+          <Property Name="Balance1" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK_Balances_Patients" FromRole="Balances" ToRole="Patients" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_Balances" FromRole="Balances" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="ClinicalStory">
+          <Key>
+            <PropertyRef Name="idClinicalStory" />
+          </Key>
+          <Property Name="idClinicalStory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CurrentCondition" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Patients" Relationship="Self.FK_Patients_ClinicalStories" FromRole="ClinicalStories" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="Heritage">
+          <Key>
+            <PropertyRef Name="idHeritage" />
+          </Key>
+          <Property Name="idHeritage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="idPatient" />
+          </Key>
+          <Property Name="idPatient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Folder" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PreferredContactForm" Type="Int32" />
+          <Property Name="idClinicalStory" Type="Int32" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="UserRegistration" Type="DateTime" Precision="3" />
+          <Property Name="Avatar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointments_Patients" FromRole="Patients" ToRole="Appointments" />
+          <NavigationProperty Name="Balances" Relationship="Self.FK_Balances_Patients" FromRole="Patients" ToRole="Balances" />
+          <NavigationProperty Name="ClinicalStory" Relationship="Self.FK_Patients_ClinicalStories" FromRole="Patients" ToRole="ClinicalStories" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="idPayment" />
+          </Key>
+          <Property Name="idPayment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Pay" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="idBalance" Type="Int32" />
+          <NavigationProperty Name="Balance" Relationship="Self.FK_Payments_Balances" FromRole="Payments" ToRole="Balances" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Appointments_Patients">
+          <End Role="Patients" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Appointments" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="idPatient" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="idPatient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Balances_Patients">
+          <End Role="Patients" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Balances" Type="Self.Balance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="idPatient" />
+            </Principal>
+            <Dependent Role="Balances">
+              <PropertyRef Name="idPatient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Balances">
+          <End Role="Balances" Type="Self.Balance" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Balances">
+              <PropertyRef Name="idBalance" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="idBalance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Patients_ClinicalStories">
+          <End Role="ClinicalStories" Type="Self.ClinicalStory" Multiplicity="0..1" />
+          <End Role="Patients" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClinicalStories">
+              <PropertyRef Name="idClinicalStory" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="idClinicalStory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DentisOneDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Appointments" EntityType="Self.Appointment" />
+          <EntitySet Name="Balances" EntityType="Self.Balance" />
+          <EntitySet Name="ClinicalStories" EntityType="Self.ClinicalStory" />
+          <EntitySet Name="Heritages" EntityType="Self.Heritage" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_Appointments_Patients" Association="Self.FK_Appointments_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Balances_Patients" Association="Self.FK_Balances_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Balances" EntitySet="Balances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Balances" Association="Self.FK_Payments_Balances">
+            <End Role="Balances" EntitySet="Balances" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Patients_ClinicalStories" Association="Self.FK_Patients_ClinicalStories">
+            <End Role="ClinicalStories" EntitySet="ClinicalStories" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DentisOneDBModelStoreContainer" CdmEntityContainer="DentisOneDBEntities">
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="DentisOneDBModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointments">
+                <ScalarProperty Name="idAppointment" ColumnName="idAppointment" />
+                <ScalarProperty Name="Treatment" ColumnName="Treatment" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Reminder" ColumnName="Reminder" />
+                <ScalarProperty Name="idPatient" ColumnName="idPatient" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Balances">
+            <EntityTypeMapping TypeName="DentisOneDBModel.Balance">
+              <MappingFragment StoreEntitySet="Balances">
+                <ScalarProperty Name="idBalance" ColumnName="idBalance" />
+                <ScalarProperty Name="idPatient" ColumnName="idPatient" />
+                <ScalarProperty Name="Balance1" ColumnName="Balance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClinicalStories">
+            <EntityTypeMapping TypeName="DentisOneDBModel.ClinicalStory">
+              <MappingFragment StoreEntitySet="ClinicalStories">
+                <ScalarProperty Name="idClinicalStory" ColumnName="idClinicalStory" />
+                <ScalarProperty Name="CurrentCondition" ColumnName="CurrentCondition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Heritages">
+            <EntityTypeMapping TypeName="DentisOneDBModel.Heritage">
+              <MappingFragment StoreEntitySet="Heritage">
+                <ScalarProperty Name="idHeritage" ColumnName="idHeritage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="DentisOneDBModel.Patient">
+              <MappingFragment StoreEntitySet="Patients">
+                <ScalarProperty Name="idPatient" ColumnName="idPatient" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Folder" ColumnName="Folder" />
+                <ScalarProperty Name="PreferredContactForm" ColumnName="PreferredContactForm" />
+                <ScalarProperty Name="idClinicalStory" ColumnName="idClinicalStory" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="UserRegistration" ColumnName="UserRegistration" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="DentisOneDBModel.Payment">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="idPayment" ColumnName="idPayment" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Pay" ColumnName="Pay" />
+                <ScalarProperty Name="idBalance" ColumnName="idBalance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DentisOneDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
