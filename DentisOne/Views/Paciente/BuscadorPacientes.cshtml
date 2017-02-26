@@ -1,0 +1,133 @@
+﻿@model DentisOne.Models.PacienteModel
+
+@{
+    ViewBag.Title = "BuscadorPacientes";
+    ViewBag.FontAwesome = "fa fa-search";
+}
+<div class="col-md-12">
+    <h2>Buscador de Pacientes</h2>
+
+    <div class="row" style="padding-bottom:20px;">
+        <div class="col-md-12" style="padding-bottom:10px;">
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">*Nombre</span>
+                    <input class="form-control" />
+                </div>
+                <label class="error">This is an error</label>
+            </div>
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">*Apellidos</span>
+                    <input class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-info" href="#">
+                    <i class="fa fa-search fa-lg"></i> Buscar
+                </a>
+            </div>
+        </div>
+        <div class="col-md-12" style="padding-bottom:10px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tblPacientes" class="table table-responsive" >
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>Celular</th>
+                                <th>Edad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div style="">
+            @Html.HiddenFor(m => m.listaPacientes)
+    </div>
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#tblPacientes').DataTable({
+            "sDom": '<"top"f>rt<"bottom"lp><"clear">',
+            "lengthMenu": [[25, 35, 50, -1], [25, 35, 50, "All"]],
+            "destroy": true,
+            "data": JSON.parse($("#listaPacientes").val()),
+            "columns": [
+                    { "data": "id" },
+                    { "data": "Name" },
+                    { "data": "LastName" },
+                    { "data": "Email" },
+                    { "data": "PhoneNumber" },
+                    { "data": "Mobile" },
+                    { "data": "Age" }
+            ]
+            ,
+            "columnDefs": [
+            {
+                "title": "Nombre",
+                "targets": 1,
+                "render": function (data, type, row) {
+                    return row["Name"] + ' ' + row["LastName"];
+                }
+            },
+            {
+                "title": "Apellidos",
+                "targets": 2,
+                "searchable": false,
+                "visible": false
+            },
+            {
+                "title": "Email",
+                "targets": 3,
+                "searchable": false,
+                "visible": true
+            },
+            {
+                "title": "Teléfono",
+                "targets": 4,
+                "searchable": false,
+                "visible": true,
+                "render": function (data, type, row) {
+                    return row["PhoneNumber"];
+                }
+            },
+            {
+                "title": "Celular",
+                "targets": 5,
+                "searchable": false,
+                "visible": true,
+                "render": function (data, type, row) {
+                    return row["Mobile"];
+                }
+            },
+            {
+                "title": "",
+                "targets": 6,
+                "render": function (data, type, row) {
+                    return '<a href="/EditarPaciente/' + row["id"] + '" target="_blank" class="btn btn-primary"> Editar</a>';
+                }
+            }
+            ]
+        });
+    });
+
+
+</script>

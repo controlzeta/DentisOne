@@ -1,0 +1,134 @@
+﻿@model DentisOne.Models.PacienteModel.Paciente
+
+@{
+    ViewBag.Title = "Alta de Paciente";
+    ViewBag.FontAwesome = "fa fa-pencil";
+}
+<div class="col-md-12">
+    @using (@Html.BeginForm("InsertaPaciente", "Paciente"))
+    {
+        <div id="formulario" class="row" style="padding-bottom:20px;">
+            <h2 style="padding-bottom:10px;">Captura los datos del Paciente</h2>
+            <div class="row" style="padding-bottom:20px;">
+                <div class="col-md-12" style="padding-bottom:10px;">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">*Nombre</span>
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Nombre del Paciente" })
+                        </div>
+                        @Html.LabelFor(m => m.Name, new {@class = "error" })
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">*Apellidos</span>
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Apellidos del Paciente" })
+                        </div>
+                        <label class="error">This is an error</label>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding-bottom:10px;">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">*Teléfono</span>
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "2222222222", @maxlength = "10" })
+                        </div>
+                        <label class="error">This is an error</label>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">*Celular</span>
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "2228222222", @maxlength = "10" })
+                        </div>
+                        <label class="error">This is an error</label>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding-bottom:10px;">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">*Email</span>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "nombre@dominio.com" })
+                        </div>
+                        <label class="error">This is an error</label>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">Forma de Contacto Preferida</span>
+                            <select class="form-control">
+                                <option>Celular</option>
+                                <option>Teléfono de Casa</option>
+                                <option>Email</option>
+                            </select>
+                        </div>
+                        <label class="error">This is an error</label>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding-bottom:10px;">
+                    <div class="col-md-6">
+                        <label>Fecha de Nacimiento</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                            @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control datepicker", @placeholder = "02/05/1989" })
+                        </div>
+                        <label class="error">This is an error</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Foto de Paciente</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">Foto</span>
+                            <input type="file" name="file" id="file" style="width: 100%; display:none;" />
+
+                            @Html.TextBoxFor(m => m.uploadImage, new { @class = "form-control", @placeholder = "C:/foto-paciente.jpeg" })
+                            <span class="input-group-btn">
+                                <button id="btnSubir" class="btn btn-default" type="button">Subir!</button>
+                            </span>
+                        </div>
+                        <label class="error">This is an error</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    @Html.HiddenFor(m => m.id)
+                    @Html.HiddenFor(m => m.idClinicalStory)
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    @*@Html.ActionLink("Guardar", "InsertaPaciente")*@
+                    <input class="btn btn-primary pull-right fa fa-lg" type="submit" value="&#xf0c7; Guardar" />
+                    <input class="btn btn-info pull-right fa fa-lg" type="submit" value="&#xf0c7; Limpiar" />
+                    @*<a class="btn btn-primary pull-right" href="@Url.Action("InsertaPaciente", "Paciente")">
+                        <i class="fa fa-save fa-lg"></i> Guardar
+                    </a>*@
+
+                </div>
+            </div>
+        </div>
+        <div id="Success" class="row" style="padding-bottom:20px; display:none;">
+            <div class="col-md-12">
+                <div class="text-center" style="color:green; font-size:34px;">
+                    <i class="fa fa-check-circle-o fa-5" aria-hidden="true"></i>  Alta de Paciente Exitosa!
+                </div>
+            </div>
+        </div>
+        <div id="Failure" class="row" style="padding-bottom:20px; display:none;">
+            <div class="col-md-12">
+                <div class="text-center" style="color:red; font-size:34px;">
+                    <i class="fa fa-times-circle fa-5" aria-hidden="true"></i>  Algo falló inténtalo de nuevo!
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        console.log("ready!!!");
+    });
+    $(document).on('click', '#btnSubir', function () {
+        $("#file").click();
+    });
+    $(document).on('change', '#file', function () {
+        console.log($(this));
+        console.log($(this).val());
+        //console.log($(this).files[0].name);
+        $("#uploadImage").val($(this).val());
+    });
+</script>
