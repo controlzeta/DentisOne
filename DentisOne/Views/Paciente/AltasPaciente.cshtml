@@ -53,10 +53,10 @@
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Forma de Contacto Preferida</span>
-                            <select class="form-control">
-                                <option>Celular</option>
-                                <option>Teléfono de Casa</option>
-                                <option>Email</option>
+                            <select id="idPreferredContactForm" class="form-control">
+                                <option value="1">Celular</option>
+                                <option value="2">Teléfono de Casa</option>
+                                <option value="3">Email</option>
                             </select>
                         </div>
                         <label class="error">This is an error</label>
@@ -93,12 +93,17 @@
             <div class="col-md-12">
                 <div class="row">
                     @*@Html.ActionLink("Guardar", "InsertaPaciente")*@
-                    <input class="btn btn-primary pull-right fa fa-lg" type="submit" value="&#xf0c7; Guardar" />
-                    <input class="btn btn-info pull-right fa fa-lg" type="submit" value="&#xf0c7; Limpiar" />
-                    @*<a class="btn btn-primary pull-right" href="@Url.Action("InsertaPaciente", "Paciente")">
+                    @*<input class="btn btn-primary pull-right fa fa-lg" type="submit" value="&#xf0c7; Guardar" />*@
+                    @*<input class="btn btn-info pull-right fa fa-lg" type="submit" value="&#xf0c7; Limpiar" />*@
+                    <a class="btn btn-primary pull-right" onclick="SavePatient();" style="margin:5px;">
                         <i class="fa fa-save fa-lg"></i> Guardar
-                    </a>*@
-
+                    </a>
+                    <a class="btn btn-info pull-right" href="@Url.Action("InsertaPaciente", "Paciente")" style="margin:5px;">
+                        <i class="fa fa-trash fa-lg"></i> Limpiar
+                    </a>
+                    <a class="btn btn-danger pull-right" href="@Url.Action("InsertaPaciente", "Paciente")" style="margin:5px;">
+                        <i class="fa fa-pencil fa-lg"></i> Editar
+                    </a>
                 </div>
             </div>
         </div>
@@ -128,7 +133,54 @@
     $(document).on('change', '#file', function () {
         console.log($(this));
         console.log($(this).val());
-        //console.log($(this).files[0].name);
         $("#uploadImage").val($(this).val());
     });
+
+    function SavePatient() {
+        if (Validate()) {
+
+        }
+    }
+
+    function Validate() {
+        var valid = true;
+        if ($('#Name').val() == "") {
+            toastr.info('Necesitas escribir el nombre del paciente');
+            $('#Name').focus();
+            valid = false;
+        }
+        if ($('#LastName').val() == "") {
+            toastr.info('Necesitas escribir los apellidos del paciente');
+            $('#LastName').focus();
+            valid = false;
+        }
+        if ($('#PhoneNumber').val() == "" || $('#Mobile').val() == "") {
+            toastr.info('Necesitas escribir el Télefono o el Celular del paciente');
+            $('#PhoneNumber').focus();
+            valid = false;
+        }
+        if ($('#Email').val() == "") {
+            toastr.info('Necesitas escribir el correo del paciente');
+            $('#Email').focus();
+            valid = false;
+        }
+        return valid;
+    }
+
+    function createObject() {
+        var object = "";
+        object = "{ p : { id : " + $('#id').val() +
+            " , Name : '" + $('#Name').val() +
+            "' , LastName : '" + $('#LastName').val() +
+            "' , PhoneNumber : '" + $('#PhoneNumber').val() +
+            "' , Mobile : '" + $('#Mobile').val() +
+            "' , Email : '" + $('#Email').val() +
+            "' , idPreferredContactForm : " + $('#idPreferredContactForm option:selected').val() +
+            " , idClinicalStory : " + $('#idClinicalStory').val() +
+            " , Birthday : '" + $('#Birthday').val() +
+        "' } }";
+
+        return object;
+    }
+
 </script>

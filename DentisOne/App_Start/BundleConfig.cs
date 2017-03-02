@@ -11,7 +11,8 @@ namespace DentisOne
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/jquery.dataTables.js",
-                        "~/Scripts/dataTables.bootstrap.js.js",
+                        "~/Scripts/dataTables.bootstrap.js",
+                        "~/Scripts/toastr.js",
                         "~/Scripts/jquery.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
@@ -32,6 +33,7 @@ namespace DentisOne
                     "~/Content/plugins/morris.css",
                     "~/Content/plugins/dataTables.bootstrap.css",
                     "~/Content/plugins/jquery.dataTables.css",
+                    "~/Content/toastr.css",
                     "~/Content/font-awesome.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
