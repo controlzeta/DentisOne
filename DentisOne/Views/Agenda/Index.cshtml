@@ -1,6 +1,29 @@
-﻿@{
+﻿@model DentisOne.Models.AgendaModel
+@{
     ViewBag.Title = "Agenda";
     ViewBag.FontAwesome = "fa fa-calendar";
 }
 
-<h2>Agenda</h2>
+<div class="row text-center" style="padding-bottom:25px;">
+    <div class="col-md-4">
+        <a onclick="getMonth(@Model.calendario.mesAnterior.numMes)">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> @Model.calendario.mesAnterior.Nombre
+        </a>
+    </div>
+    <div class="col-md-4"><a>@Model.calendario.mes.Nombre</a></div>
+    <div class="col-md-4">
+        <a onclick="getMonth(@Model.calendario.mesAnterior.numMes)">
+            @Model.calendario.mesSiguiente.Nombre <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+<div class="row">
+    @foreach (var dia in Model.calendario.MesActual)
+    {
+        <div class="col-lg-2 text-center" style="width:14.28%; min-height:75px;">
+            @dia.DayOfWeek <br />
+            @dia.ToShortDateString()
+        </div>
+
+    }
+</div>

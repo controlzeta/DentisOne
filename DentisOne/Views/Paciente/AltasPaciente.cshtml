@@ -16,14 +16,12 @@
                             <span class="input-group-addon" id="basic-addon1">*Nombre</span>
                             @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Nombre del Paciente" })
                         </div>
-                        @Html.LabelFor(m => m.Name, new {@class = "error" })
                     </div>
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">*Apellidos</span>
                             @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Apellidos del Paciente" })
                         </div>
-                        <label class="error">This is an error</label>
                     </div>
                 </div>
                 <div class="col-md-12" style="padding-bottom:10px;">
@@ -32,14 +30,12 @@
                             <span class="input-group-addon" id="basic-addon1">*Teléfono</span>
                             @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "2222222222", @maxlength = "10" })
                         </div>
-                        <label class="error">This is an error</label>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">*Celular</span>
                             @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "2228222222", @maxlength = "10" })
                         </div>
-                        <label class="error">This is an error</label>
                     </div>
                 </div>
                 <div class="col-md-12" style="padding-bottom:10px;">
@@ -48,7 +44,6 @@
                             <span class="input-group-addon" id="basic-addon1">*Email</span>
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "nombre@dominio.com" })
                         </div>
-                        <label class="error">This is an error</label>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group">
@@ -59,7 +54,6 @@
                                 <option value="3">Email</option>
                             </select>
                         </div>
-                        <label class="error">This is an error</label>
                     </div>
                 </div>
                 <div class="col-md-12" style="padding-bottom:10px;">
@@ -69,7 +63,6 @@
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                             @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control datepicker", @placeholder = "02/05/1989" })
                         </div>
-                        <label class="error">This is an error</label>
                     </div>
                     <div class="col-md-6">
                         <label>Foto de Paciente</label>
@@ -82,7 +75,6 @@
                                 <button id="btnSubir" class="btn btn-default" type="button">Subir!</button>
                             </span>
                         </div>
-                        <label class="error">This is an error</label>
                     </div>
                 </div>
                 <div class="col-md-12">

@@ -40,11 +40,15 @@
                                 <th>Email</th>
                                 <th>Telefono</th>
                                 <th>Celular</th>
-                                <th>Edad</th>
+                                <th></th>
+                                <th style="width: 92px;"></th>
+                                <th style="width: 92px;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+                                <td>-</td>
+                                <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -81,6 +85,11 @@
             ]
             ,
             "columnDefs": [
+            {
+                "targets": 0,
+                "searchable": false,
+                "visible": false
+            },
             {
                 "title": "Nombre",
                 "targets": 1,
@@ -121,10 +130,27 @@
             {
                 "title": "",
                 "targets": 6,
+                "searchable": true,
                 "render": function (data, type, row) {
-                    return '<a href="/EditarPaciente/' + row["id"] + '" target="_blank" class="btn btn-primary"> Editar</a>';
+                    return '<a href="/EditarPaciente/' + row["id"] + '" target="_blank" class="btn btn-danger"><i class="fa fa-pencil"></i> Editar</a>';
                 }
+            },
+            {
+                "title": "",
+                "targets": 7,
+                "searchable": true,
+                "render": function (data, type, row) {
+                    return '<a href="/EditarPaciente/' + row["id"] + '" target="_blank" class="btn btn-info"><i class="fa fa-envelope-o" ></i> Correo</a>';
             }
+            },
+            {
+                 "title": "",
+                 "targets": 8,
+                 "searchable": true,
+                 "render": function (data, type, row) {
+                     return '<a href="/EditarPaciente/' + row["id"] + '" target="_blank" class="btn btn-success"><i class="fa fa-money" ></i> Cuenta</a>';
+                 }
+             }
             ]
         });
     });

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using DentisOne.Models;
 namespace DentisOne.Controllers
 {
     public class AgendaController : Controller
@@ -13,7 +13,9 @@ namespace DentisOne.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            AgendaModel m = new AgendaModel();
+            m.calendario = new AgendaModel.Calendario();
+            return View(m);
         }
 
     }
